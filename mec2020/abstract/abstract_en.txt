@@ -1,0 +1,8 @@
+Supporting Gregorian neumes in music notation software requires formal
+modelling of music representation, as storage format and as input
+language.  Since neumes notation differs significantly from subsequent
+music notation, we give a short historical survey and explore a
+concept for musically adequate modelling based on the Solesmes monks'
+19th century research and more recent findings, including composition
+of ligatures from basic neumes, and compare it with different
+approaches.
