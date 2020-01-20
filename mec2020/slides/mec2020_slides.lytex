@@ -1,0 +1,1384 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+%\usefonttheme{structuresmallcapsserif}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning}
+%\usepackage{fontspec}
+\usepackage{yfonts}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\qmark}{\ding{51} / \ding{55}}%
+\newcommand{\xmark}{\ding{55}}%
+%\usepackage{Alegreya}
+%\usepackage{libertine}
+%\usepackage[scaled]{helvet}
+%\renewcommand*\oldstylenums[1]{{\AlegreyaOsF #1}}
+
+%\setbeamercolor{frametitle}{bg={}}
+%\beamertemplatenavigationsymbolsempty
+\newcommand{\lily}{\texttt{LilyPond}}
+\title[Modellierung gregorianischer Neumen]{
+  Formale Modellierung gregorianischer Neumen\\
+  zur Repräsentation in Notationssoftware}
+\subtitle{am Beispiel von \lily{}}
+\author{J.~Reuter}
+\institute[\tt{soundpaint.org}]{\tt{soundpaint.org}}
+\date[MEC2020]{Notensatzkonferenz Salzburg, 18. Januar 2020}
+
+\AtBeginSection[] {
+  \begin{frame}
+    \frametitle{Überblick}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\newcommand{\bs}{\textbackslash{}}
+%\newunicodechar{ß}{\ss}
+\renewcommand{\SS}{\iffontchar\font"1E9E \symbol{"1E9E}\else SS\fi}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\mutex}{\texttt{Mu\TeX}}
+\newcommand{\musictex}{\texttt{Music\TeX}}
+\newcommand{\musixtex}{\texttt{MusiX\TeX}}
+\newcommand{\opustex}{\texttt{Opus\TeX}}
+\newcommand{\pmx}{\texttt{pmx}}
+\newcommand{\mtx}{\texttt{M-Tx}}
+\newcommand{\gregorio}{\texttt{Gregorio}}
+
+\tikzstyle{every picture}+=[remember picture]
+\everymath{\displaystyle}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Überblick}
+  \tableofcontents
+\end{frame}
+
+\section{Einleitung}
+
+\begin{frame}
+  \frametitle{Historischer Abriss}
+
+  \tikz[] \node[coordinate] (h1) {};
+  \tikz[remember picture, overlay] {
+    \node[shift={(0cm,0cm)}] at (current page.north east) (t1) {
+      \begin{tikzpicture}[remember picture, overlay]
+        \fill<4>[left color=blue!80,right color=white,shading angle=135] (-2.2,-3.3) rectangle (-1.8,-6.1);
+        \fill<10>[left color=blue!80,right color=white,shading angle=135] (-2.2,-7.6) rectangle (-1.8,-8.2);
+        \draw<1->[gray, thick, dotted] (-2,-2.2) -- (-2,-2.7);
+        \draw<1->[gray, thick] (-2,-2.7) -- (-2,-8.0);
+        \draw<1->[gray, thick, dotted] (-2,-8.0) -- (-2,-8.5);
+        \filldraw<-1,3->[black] (-2,-2.9) circle (1pt) node[anchor=west] {\tiny 9.~Jh.};
+        \filldraw<2>[blue] (-2,-2.9) circle (1pt) node[anchor=west] {\LARGE 9.~Jh.};
+        \node<2> (score-adiastematic) at (-8.5,-5.5) {\includegraphics[width=200pt]{../images/Tu_es_deus.jpg}};
+        \filldraw<-2,4->[black] (-2,-3.7) circle (1pt) node[anchor=east] {\tiny 11.~Jh.};
+        \filldraw<3>[blue] (-2,-3.7) circle (1pt) node[anchor=east] {\LARGE 11.~Jh.};
+        \node<3> (score-diastematic) at (-10.25,-6.5) {\includegraphics[width=100pt]{../images/Puer_natus_est.jpg}};
+        \filldraw<-4,6->[black] (-2,-5.7) circle (1pt) node[anchor=east] {\tiny 16.~Jh.};
+        \filldraw<5>[blue] (-2,-5.7) circle (1pt) node[anchor=east] {\LARGE 16.~Jh.};
+        \filldraw<-5,7->[black] (-2,-6.1) circle (1pt) node[anchor=west] {\tiny 1614};
+        \filldraw<6>[blue] (-2,-6.1) circle (1pt) node[anchor=west] {\LARGE 1614};
+        \node<6> (score-medicaea) at (-6.6,-6.75) {\includegraphics[width=175pt]{../images/IN_Nos_autem_gloriari_Editio_Medicaea_1890_Pustet.png}};
+        \filldraw<-6,8->[black] (-2,-7.1) circle (1pt) node[anchor=west] {\tiny Ende 19.~Jh.};
+        \filldraw<7>[blue] (-2,-7.1) circle (1pt) node[anchor=west] {
+          \begin{minipage}[b]{1cm}
+            \large Ende\vspace{-0.1cm}\\
+            19.~Jh.
+          \end{minipage}
+        };
+        \filldraw<-7,9->[black] (-2,-7.3) circle (1pt) node[anchor=east] {\tiny 1905/08};
+        \node<8> (score-vaticana) at (-5.4,-6.25) {\includegraphics[width=125pt]{../images/Quadratnotation_Tu_es_deus.png}};
+        \filldraw<8>[blue] (-2,-7.3) circle (1pt) node[anchor=east] {\LARGE 1905/08};
+        \filldraw<-8, 10->[black] (-2,-7.6) circle (1pt) node[anchor=west] {\tiny 1979};
+        \filldraw<9>[blue] (-2,-7.6) circle (1pt) node[anchor=west] {\LARGE 1979};
+        \filldraw<-10>[black] (-2,-7.8) circle (1pt) node[anchor=east] {\tiny 2011/2018};
+        \node<10> (score-diastematic) at (-5.0,-7.65) {
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \score {
+              \transpose c c' {
+                \[ \cavum a \]
+                \[ \linea a \]
+                \[ \cavum \linea a \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}
+        };
+        \filldraw<11>[blue] (-2,-7.8) circle (1pt) node[anchor=east] {\LARGE 2011/2018};
+      \end{tikzpicture}
+    }
+  }
+
+  \begin{tikzpicture}
+  \end{tikzpicture}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} Adiastematische Neumen}
+  \item<3-> {\color<3>{blue} Diastematische Neumen}
+  \item<4-> {\color<4>{blue} Verfall}
+  \item<5-> {\color<5>{blue} Notendruck, später Notenstich}
+  \item<6-> {\color<6>{blue} Editio Medicæa}
+  \item<7-> {\color<7>{blue} Erste Restitution}
+  \item<8-> {\color<8>{blue} Editio Vaticana (\glqq{}Vat\grqq)}
+  \item<9-> {\color<9>{blue} Graduale Triplex (\glqq{}GT\grqq)}
+  \item<10-> {\color<10>{blue} Neographie}
+  \item<11-> {\color<11>{blue} Graduale Novum (\glqq{}GrN\grqq)}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ductus}
+   Schreibstile (lat.\ \glqq{}Ductus\grqq)
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} meist adiastematisch verwendet}
+    \begin{itemize}
+    \item<3-> {\color<3>{blue} St. Gallen}
+    \item<4-> {\color<4>{blue} Laon}
+    \item<5-> {\color<5>{blue} Einsiedeln}
+    \item<6-> {\color<6>{blue} \textellipsis}
+    \end{itemize}
+  \item<7-> {\color<2>{blue} meist diastematisch verwendet}
+    \begin{itemize}
+    \item<8-> {\color<8>{blue} gotisch (\glqq{}Hufnagel\grqq)}
+    \item<9-> {\color<9>{blue} römisch (\glqq{}Quadratnotation\grqq)}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Notationselemente am Beispiel der Quadratnotation}
+  \begin{minipage}[b]{1cm}
+    \begin{center}
+      {\tiny Ant.}\vspace{-0.3cm}\\
+      {\tiny 1.}\vspace{0.1cm}\\
+      {\LARGE S}\\
+      \vspace{0.1cm}
+    \end{center}
+  \end{minipage}
+  \hspace{-0.7cm}
+  \tikz[] \node[coordinate] (n1) {};
+  \begin{lilypond}[]
+    \version "2.19.83" % preferably use exactly this version to ensure
+                       % the resulting score matches the layout of our
+                       % annotations
+    \include "gregorian.ly"
+    #(set-global-staff-size 14)
+    \paper {
+      indent = 0\mm
+      line-width = 38\mm
+    }
+    \score {
+      <<
+        \new VaticanaVoice = "cantus" {
+          \clef "vaticana-do3"
+          % Sal-
+          a\melisma \[ a \flexa g \pes a\melismaEnd \]
+          % ve,
+          % \augmentum
+          d
+          \divisioMinima
+          % Re-
+          \[ a\melisma \flexa g\melismaEnd \]
+          % gí-
+          \[ f\melisma \flexa e f \pes g \flexa f\melismaEnd \]
+          % na,
+          \[ \augmentum e\melisma \flexa \augmentum d\melismaEnd \]
+          \divisioMaior
+          % ma-
+          c
+          % ter
+          d
+          % mi-
+          \[d\melisma \flexa c\melismaEnd \]
+          % se-
+          d
+          % ri-
+          \[ e\melisma \pes f\melismaEnd\]
+          % cór-
+          g
+          % di-
+          \[d\melisma \pes e \flexa c\melismaEnd \]
+          % æ:
+          \augmentum d
+          \finalis
+        }
+        \new Lyrics \lyricsto "cantus" {
+          Al- ve, Re- gí- na, ma- ter mi- se- ri- cór- di- æ:
+        }
+      >>
+      \layout {
+        ragged-last = ##t
+      }
+    }
+  \end{lilypond}
+  \begin{itemize}
+  \item<2-> \color<2>{blue} 4 Linien
+    \tikz[] \node[coordinate] (n2) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(1.60cm,-1.35cm)}] at (current page.north west) (t2) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<2>(0,0) rectangle (0.45,-0.50);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<2> (n2) edge [out=0, in=-90] (t2);
+    \end{tikzpicture}
+  \item<3-> \color<3>{blue} Schlüssel (Do, Fa)
+    \tikz[] \node[coordinate] (n3) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(1.45cm,-1.30cm)}] at (current page.north west) (t3) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<3>(0,0) rectangle (0.15,-0.25);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<3> (n3) edge [out=0, in=-90] (t3);
+    \end{tikzpicture}
+  \item<4-> \color<4>{blue} Custos (\glqq{}Wächter\grqq)
+    \tikz[] \node[coordinate] (n4) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(5.10cm,-1.55cm)}] at (current page.north west) (t4) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<4>(0,0) rectangle (0.10,-0.30);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<4> (n4) edge [out=0, in=-90] (t4);
+    \end{tikzpicture}
+  \item<5-> \color<5>{blue} Divisiones
+    \tikz[] \node[coordinate] (n5) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(3.30cm,-1.30cm)}] at (current page.north west) (t5a) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<5>(0,0) rectangle (0.15,-0.25);
+        \end{tikzpicture}
+      }
+    }
+    \tikz[remember picture, overlay] {
+      \node[shift={(2.10cm,-2.50cm)}] at (current page.north west) (t5b) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<5>(0,0) rectangle (0.15,-0.40);
+        \end{tikzpicture}
+      }
+    }
+    \tikz[remember picture, overlay] {
+      \node[shift={(3.35cm,-3.50cm)}] at (current page.north west) (t5c) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<5>(0,0) rectangle (0.20,-0.55);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<5> (n5) edge [out=0, in=-90] (t5a);
+      \path[]<5> (n5) edge [out=0, in=-90] (t5b);
+      \path[]<5> (n5) edge [out=0, in=-90] (t5c);
+    \end{tikzpicture}
+  \item<6-> \color<6>{blue} Einzelneumen
+    \tikz[] \node[coordinate] (n6) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(2.10cm,-1.45cm)}] at (current page.north west) (t6) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<6>(0,0) rectangle (0.10,-0.15);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<6> (n6) edge [out=0, in=-90] (t6);
+    \end{tikzpicture}
+  \item<7-> \color<7>{blue} Ligaturen
+    \tikz[] \node[coordinate] (n7) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(2.50cm,-1.45cm)}] at (current page.north west) (t7a) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<7>(0,0) rectangle (0.35,-0.25);
+        \end{tikzpicture}
+      }
+    }
+    \tikz[remember picture, overlay] {
+      \node[shift={(3.50cm,-1.45cm)}] at (current page.north west) (t7b) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<7>(0,0) rectangle (0.25,-0.25);
+        \end{tikzpicture}
+      }
+    }
+    \tikz[remember picture, overlay] {
+      \node[shift={(1.45cm,-3.75cm)}] at (current page.north west) (t7c) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<7>(0,0) rectangle (0.15,-0.25);
+        \end{tikzpicture}
+      }
+    }
+    \tikz[remember picture, overlay] {
+      \node[shift={(2.45cm,-3.80cm)}] at (current page.north west) (t7d) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<7>(0,0) rectangle (0.25,-0.30);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<7> (n7) edge [out=0, in=-90] (t7a);
+      \path[]<7> (n7) edge [out=0, in=-90] (t7b);
+      \path[]<7> (n7) edge [out=0, in=-90] (t7c);
+      \path[]<7> (n7) edge [out=0, in=-90] (t7d);
+    \end{tikzpicture}
+  \item<8-> \color<8>{blue} Rhythmische Annotationen (Ictus, Episem, Moræ)
+    \tikz[] \node[coordinate] (n8) {};
+    \tikz[remember picture, overlay] {
+      \node[shift={(1.60cm,-2.70cm)}] at (current page.north west) (t8) {
+        \begin{tikzpicture}[remember picture, overlay]
+          \draw<8>(0,0) rectangle (0.10,-0.30);
+        \end{tikzpicture}
+      }
+    }
+    \begin{tikzpicture}[overlay]
+      \path[]<8> (n8) edge [out=0, in=-90] (t8);
+    \end{tikzpicture}
+  \item<9-> \color<9>{blue} Vorzeichen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Übersetzerbasierte Systeme}
+  \tikz[remember picture, overlay] {
+    \node[shift={(6.4cm,-1.5cm)}] at (current page.north west) (processing-graph) {
+      \begin{tikzpicture}[textnode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=2mm},overlay]
+        \draw[] (0,0) rectangle (0,0); % make graphic have a fixed position
+        \node<1-> (headline) at (0,0) {
+          Stark vereinfachtes Prozessmodell (\glqq{}Compiler\grqq)
+        };
+        \node<2->[textnode] (input-language) at (0,-0.8) {
+          \begin{minipage}[b]{11cm}
+            \begin{center}
+              \footnotesize Eingabetext in Eingabesprache\\
+              (linearer Zeichenstrom, z.B. LilyPond .ly-Datei)
+            \end{center}
+          \end{minipage}
+        };
+        \node<3->[textnode] (unprocessed-representation) [below=of input-language] {
+          \begin{minipage}[b]{11cm}
+            \begin{center}
+              \footnotesize Interne syntaktische Representation\\
+              (Baumstruktur z.B. als Datenstruktur in Scheme / Guile)
+            \end{center}
+          \end{minipage}
+        };
+        \draw<3-> [->] (input-language) -- node [right] {
+          \begin{minipage}[b]{7cm}
+            \tiny
+            \begin{itemize}
+            \item Lexikalische Analyse
+            \item Syntaktische Analyse
+            \end{itemize}
+          \end{minipage}
+        } (unprocessed-representation);
+        \node<4->[textnode] (processed-representation) [below=of unprocessed-representation] {
+          \begin{minipage}[b]{11cm}
+            \begin{center}
+              \footnotesize Interne semantische Representation\\
+              (Graphstruktur (attributierter Baum) z.B. durch interne Querverweise)
+            \end{center}
+          \end{minipage}
+        };
+        \draw<4-> [->] (unprocessed-representation) -- node [right] {
+          \begin{minipage}[b]{7cm}
+            \tiny
+            \begin{itemize}
+            \item Semantische Analyse
+              \begin{itemize}
+              \tiny
+              \item Abarbeitung von Musik-Funktionen
+              \item Auflösung von Verweisen\\(z.B. Zuordnung Textsilben
+                zu Noten)
+              \end{itemize}
+            \end{itemize}
+          \end{minipage}
+        } (processed-representation);
+        \node<5->[textnode] (code) [below=of processed-representation] {
+          \begin{minipage}[b]{11cm}
+            \begin{center}
+              \footnotesize Ausgabedatei\\
+              (z.B. PDF-Datei)
+            \end{center}
+          \end{minipage}
+        };
+        \draw<5-> [->] (processed-representation) -- node [right] {
+          \begin{minipage}[b]{7cm}
+            \tiny
+            \begin{itemize}
+            \item Optimierung (Layout)
+            \item Code-Generierung (Rendering)
+            \end{itemize}
+          \end{minipage}
+        } (code);
+      \end{tikzpicture}
+    }
+  }
+\end{frame}
+
+\section{Ligaturen}
+
+\begin{frame}
+  \frametitle{Ligaturen in Buchstabenschrift}
+  Graphisches Verschmelzen spezifischer benachbarter Zeichen
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} z.B. \glqq\textrm{f"|f}\grqq
+    $\Rightarrow$ \glqq\textrm{ff}\grqq, \glqq\textrm{f"|i}\grqq
+    $\Rightarrow$ \glqq\textrm{fi}\grqq, \glqq\textrm{f"|l}\grqq
+    $\Rightarrow$ \glqq\textrm{fl}\grqq}
+  \item<3-> {\color<3>{blue} dem Sprach- bzw. Lesefluss angepasst}
+  \item<4-> {\color<4-5>{blue} \textrm{\glqq{}finden\grqq,
+      \glqq{}Hof"|inhaber\grqq, \glqq{}Abflug\grqq,
+      \glqq{}Auf"|lage\grqq}}
+  \item<6-> {\color<6>{blue} Repräsentation \glqq\textrm{fi}\grqq,
+    \glqq\textrm{fl}\grqq als eigene Zeichen?}
+  \item<7-> {\color<7>{blue} Würde Sonderbehandlung erfordern bei
+    Verarbeitung, z.B.:}
+    \begin{itemize}
+    \item<8-> {\color<8>{blue} Konvertierung Großschreibung oder
+      Schriftart (vgl. Ductus)}
+    \item<9-> {\color<9>{blue} Textumkehrung (vgl. Krebsgang,
+      Umkehrung)}
+    \end{itemize}
+  \item<10-> {\color<10>{blue} Besser automatische Berücksichtigung erst beim Rendering}
+  \item<11-> {\color<11>{blue} Ggf. Annotation wenn Automatik versagt}
+  \end{itemize}
+  \tikz[remember picture, overlay] {
+    \node[shift={(0cm,0cm)}] at (current page.north east) (t1) {
+      \begin{tikzpicture}[remember picture, overlay]
+        \draw<5>[red, thick] (-9.2,-3.8) -- (-9.2,-4.2);
+        \draw<5>[red, thick] (-5.0,-3.8) -- (-5.0,-4.2);
+        \draw<5>[red] (-11.3,-3.9) circle (2.5pt);
+        \draw<5>[red] (-6.7,-3.9) circle (2.5pt);
+      \end{tikzpicture}
+    }
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Ligaturen: Beispiel Verselbständigung}
+  \font\ssdemo=cmb10
+  Manchmal Verselbständigung zu neuem Zeichen
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} \glqq{}sz\grqq-Ligatur}
+  \item<3-> {\color<3>{blue} \glqq\textfrak{s{} z}\grqq{}}
+  \item<4-> {\color<4>{blue} $\curvearrowright$ \glqq\textfrak{sz}\grqq{}}
+  \item<5-> {\color<5>{blue} $\curvearrowright$ \glqq{}ß\grqq{}}
+  \item<6-> {\color<6>{blue} aber keine Ligatur für \glqq{}SZ\grqq{}}
+  \item<7-> {\color<7>{blue} Verwendung von \glqq{}SS\grqq{}}
+  \item<8-> {\color<8>{blue} seit 2017 amtlich auch als deutscher
+    Großbuchstabe}
+  %\item<8-> {\color<8>{blue} $\curvearrowright$ \glqq{}ẞ\grqq{}}
+  %\item<8-> {\color<8>{blue} $\curvearrowright$ \MakeUppercase{aßa}}
+  %\item<8-> {\color<8>{blue} $\curvearrowright$
+  %  \glqq{}\symbol{"1E9E}\grqq{}}
+  \item<9-> {\color<9>{blue} nunmehr vollständig selbständiges
+    Zeichen}
+  \item<10-> {\color<10>{blue} Repräsentation als eigenständiges
+    Zeichen sinnvoll}
+  \end{itemize}
+\end{frame}
+
+\section{Modellierung am Beispiel von \lily}
+
+\begin{frame}
+  \frametitle{Liqueszenzen}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} Aussprachehilfe}
+  \item<3-> {\color<3>{blue} bei bestimmten Buchstabenfolgen}
+  \item<4-> {\color<4>{blue} Liqueszierende Einzelneumen}
+    \begin{tabular}{|ccc|}
+      \hline
+      Bezeichnung & Neume & Eingabesprache\\
+      \hline
+      \hline
+      % auctum ascendens
+      \tiny{Auctum Ascendens} &
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ \auctum \ascendens a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond} &
+      \tiny{\tt{\bs[ \bs{}auctum \bs{}ascendens a \bs]}}\\
+      \hline
+      % auctum descendens
+      \tiny{Auctum Descendens} &
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ \auctum \descendens a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond} &
+      \tiny{\tt{\bs[ \bs{}auctum \bs{}descendens a \bs]}}\\
+      \hline
+      % punctum inclinatum auctum
+      \tiny{Punctum inclinatum auctum} &
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ \inclinatum \auctum a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond} &
+      \tiny{\tt{\bs[ \bs{}inclinatum \bs{}auctum a \bs]}}\\
+      \hline
+      % punctum inclinatum parvum
+      \tiny{Punctum inclinatum parvum} &
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ \inclinatum \deminutum a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond} &
+      \tiny{\tt{\bs[ \bs{}inclinatum \bs{}deminutum a \bs]}}\\
+      \hline
+    \end{tabular}
+  \item<5-> {\color<5>{blue} Verwendung von Präfixnotation zur Attributierung}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gruppenneumen als Ligaturen}
+  Zusammensetzung von Gruppenneumen aus Einzelneumen
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} Beispiele mit Porrectus und Torculus}
+    \begin{tabular}{|ccccc|}
+      \hline
+      Zusammensetzung & = & Bestandteil 1 & + & Bestandteil 2\\
+      \hline
+      \hline
+      % porrectus = flexa + pes
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Porrectus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ c' \flexa a \pes b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ c' \bs{}flexa a \bs{}pes b \bs]}}
+        \end{center}
+      \end{minipage} & = &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Flexa}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ c' \flexa a \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ c' \bs{}flexa a \bs]}}
+        \end{center}
+      \end{minipage} & + &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Pes}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ a \pes b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ a \bs{}pes b \bs]}}
+        \end{center}
+      \end{minipage}\\
+      \hline
+      % torculus = pes + flexa
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Torculus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ a \pes c' \flexa b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ a \bs{}pes c' \bs{}flexa b \bs]}}
+        \end{center}
+      \end{minipage} & = &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Pes}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ a \pes c' \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ a \bs{}pes c' \bs]}}
+        \end{center}
+      \end{minipage} & + &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Flexa}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ c' \flexa b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ c' \bs{}flexa b \bs]}}
+        \end{center}
+      \end{minipage}\\
+      \hline
+
+      % porrectus flexus = porrectus + flexus
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Porrectus Flexus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ b \flexa g \pes b \flexa g \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ b \bs{}flexa g \bs{}pes b \bs{}flexa g \bs]}}
+        \end{center}
+      \end{minipage} & = &
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Porrectus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ c' \flexa a \pes b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ c' \bs{}flexa a \bs{}pes b \bs]}}
+        \end{center}
+      \end{minipage} & + &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Flexa}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ c' \flexa b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ c' \bs{}flexa b \bs]}}
+        \end{center}
+      \end{minipage}\\
+      \hline
+
+      % torculus resupinus = torculus + pes
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Torculus Resupinus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ g \pes b \flexa g \pes b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ g \bs{}pes b \bs{}flexa g \bs{}pes b \bs]}}
+        \end{center}
+      \end{minipage} & = &
+      \begin{minipage}[c]{3cm}
+        \begin{center}
+          \tiny{Torculus}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ a \pes c' \flexa b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ a \bs{}pes c' \bs{}flexa b \bs]}}
+        \end{center}
+      \end{minipage} & + &
+      \begin{minipage}[c]{2.5cm}
+        \begin{center}
+          \tiny{Pes}\\
+          \begin{lilypond}[]
+            \include "gregorian.ly"
+            \include "neumeDemoLayoutNew.ly"
+            \score {
+              \transpose c c' { \[ a \pes b \] }
+              \layout { \neumeDemoLayoutNew }
+            }
+          \end{lilypond}\\
+          \tiny{\tt{\bs[ a \bs{}pes b \bs]}}
+        \end{center}
+      \end{minipage}\\
+      \hline
+
+    \end{tabular}
+  \item<3-> {\color<3>{blue} Grundidee wie bei textuellen Ligaturen,
+    etwa \glqq\textrm{fi}\grqq{} = \glqq\textrm{f}\grqq{} +
+    \glqq\textrm{i}\grqq{}}
+  \item<4-> {\color<4>{blue} Ligatur nicht als eigenes Zeichen
+    \glqq{}Porrectus\grqq, etc.}
+  \item<5-> {\color<5>{blue} sondern Repräsentation aus kleineren
+    Bestandteilen}
+  \item<6-> {\color<6>{blue} Festlegung auf zusammenhängendes
+    Neumenzeichen erst im Rendering}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gruppenneumen}
+  Vorteile der Modellierung als Zusammensetzung\\
+  % porrectus = flexa + pes
+  \begin{minipage}[c]{3cm}
+    \begin{center}
+      \tiny{Porrectus}\\
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ c' \flexa a \pes b \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}\\
+      \tiny{\tt{\bs[ c' \bs{}flexa a \bs{}pes b \bs]}}
+    \end{center}
+  \end{minipage}
+  =
+  \begin{minipage}[c]{2.5cm}
+    \begin{center}
+      \tiny{Flexa}\\
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ c' \flexa a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}\\
+      \tiny{\tt{\bs[ c' \bs{}flexa a \bs]}}
+    \end{center}
+  \end{minipage}
+  +
+  \begin{minipage}[c]{2.5cm}
+    \begin{center}
+      \tiny{Pes}\\
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \include "neumeDemoLayoutNew.ly"
+        \score {
+          \transpose c c' { \[ a \pes b \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}\\
+      \tiny{\tt{\bs[ a \bs{}pes b \bs]}}
+    \end{center}
+  \end{minipage}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} keine bzw. weniger Sonderregeln
+    notwendig}
+    \begin{itemize}
+    \item<3-> {\color<3>{blue} bereits jetzt bei MIDI-Export}
+    \item<4-> {\color<4>{blue} und Transkription in moderne Notation,}
+    \item<5-> {\color<5>{blue} perspektivisch auch bei anderen
+      Exporten (MusicXML, Braille, \ldots)}
+    \item<6-> {\color<6>{blue} und bei zukünftiger Ausgabe in anderem
+      Ductus (z.B. Hufnagel)}
+    \end{itemize}
+  \item<7-> {\color<7>{blue} einfacher zu schreibende
+    Musik-Funktionen}
+  \item<8-> {\color<8>{blue} vermeidet kombinatorische Explosion von
+    Ligaturenzeichen im Zeichensatz\\
+    \begin{minipage}[c]{2.5cm}
+      \begin{center}
+        \begin{lilypond}[]
+          \include "gregorian.ly"
+          \include "neumeDemoLayoutNew.ly"
+          \score {
+            \transpose c c' {
+              \[ c' \flexa a \pes b \]
+              \[ c' \flexa f \pes g \]
+              \[ c' \flexa f \pes d' \]
+              \[ c' \flexa g \pes b \]
+              \[ c' \flexa b \pes c' \]
+              \[ c' \flexa b \pes d' \]
+              \[ c' \flexa b \pes f' \]
+            }
+            \layout { \neumeDemoLayoutNew }
+          }
+        \end{lilypond}\\
+      \end{center}
+    \end{minipage}
+  }
+  \end{itemize}
+\end{frame}
+
+%\begin{frame}
+%  \frametitle{Weitere Ligaturen}
+%  {\LARGE Ligaturen bestehend aus drei Neumen}
+%
+%  \begin{tabular}{lll}
+%    Ligatur & Bezeichnung & Syntax \\
+%    % Porrectus
+%    \begin{lilypond}[]
+%      \include "gregorian.ly"
+%      \include "neumeDemoLayoutNew.ly"
+%      \score {
+%        \transpose c c' { \[ c' \flexa a \pes b \] }
+%        \layout { \neumeDemoLayoutNew }
+%      }
+%    \end{lilypond} &
+%    Porrectus &
+%    \tt{\bs[ c' \bs{}flexa a \bs{}pes b \bs]}\\
+%    % Torculus
+%    \begin{lilypond}[]
+%      \include "gregorian.ly"
+%      \include "neumeDemoLayoutNew.ly"
+%      \score {
+%        \transpose c c' { \[ a \pes c' \flexa b \] }
+%        \layout { \neumeDemoLayoutNew }
+%      }
+%    \end{lilypond} &
+%    Torculus &
+%    \tt{\bs[ a \bs{}pes c' \bs{}flexa b \bs]}\\
+%  \end{tabular}
+%\end{frame}
+
+\begin{frame}
+  \frametitle{Ligaturen: Klassenhierarchie in \lily}
+  \tikz[remember picture, overlay] {
+    \node[shift={(4cm,-2cm)}] at (current page.north west) (t1) {
+      \begin{tikzpicture}[roundnode/.style={circle, draw=black!60, fill=black!5, very thick, minimum size=2mm},textnode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=2mm},overlay]
+        \draw[] (0,0) rectangle (0,0); % make graphic have a fixed position
+        \node<1->[roundnode] (root) {
+          \begin{minipage}[b]{1cm}
+            \tiny Ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<2>[textnode] (root-text) [below=of root] {
+          \begin{minipage}[b]{3cm}
+            \tiny
+            \begin{itemize}
+            \item erkennt Anfang und Ende einer Ligatur
+            \item filtert von Ligatur umschlossene Musik
+            \end{itemize}
+          \end{minipage}
+        };
+        \node<3->[roundnode] (bracket) [below left=of root] {
+          \begin{minipage}[b]{1cm}
+            \tiny Ligature\_\\bracket\_\\engraver
+          \end{minipage}
+        };
+        \node<4>[textnode] (bracket-text) [below=of bracket] {
+          \begin{minipage}[b]{3cm}
+            \tiny
+            \begin{itemize}
+              \item für Transkription in modernen Notentext
+              \item markiert Ligatur durch eckige Klammer
+              \item Umsetzung wie bei akzidentiellen Teilungen
+                (z.B. Triolen-Klammer)
+              \item daher keine echte Unterklasse mehr
+            \end{itemize}
+          \end{minipage}
+        };
+        \node<5->[roundnode] (coherent) [below right=of root] {
+          \begin{minipage}[b]{1cm}
+            \tiny Coherent\_\\ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<6>[textnode] (coherent-text) [below=of coherent] {
+          \begin{minipage}[b]{3cm}
+            \tiny fester, enger Abstand der Notenköpfe der Ligatur
+          \end{minipage}
+        };
+        \node<7->[roundnode] (mensural) [below left=of coherent] {
+          \begin{minipage}[b]{1cm}
+            \tiny Mensural\_\\ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<8>[textnode] (mensural-text) [below=of mensural] {
+          \begin{minipage}[b]{3cm}
+            \tiny Ligaturen in Mensuralnotation
+          \end{minipage}
+        };
+        \node<9->[roundnode] (gregorian) [below right=of coherent] {
+          \begin{minipage}[b]{1cm}
+            \tiny Gregorian\_\\ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<10>[textnode] (gregorian-text) [below=of gregorian] {
+          \begin{minipage}[b]{3cm}
+            \tiny Modellierung gregorianischer Ligaturen
+          \end{minipage}
+        };
+        \node<11->[roundnode] (vaticana) [below left=of gregorian] {
+          \begin{minipage}[b]{1cm}
+            \tiny Vaticana\_\\ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<12>[textnode] (vaticana-text) [left=of vaticana] {
+          \begin{minipage}[b]{3cm}
+            \tiny graphische Besonderheiten des Vaticana-Ductus
+          \end{minipage}
+        };
+        \node<13->[roundnode,dotted] (gothic) [below right=of gregorian] {
+          \begin{minipage}[b]{1cm}
+            \tiny Hufnagel\_\\ligature\_\\engraver
+          \end{minipage}
+        };
+        \node<14>[textnode] (gothic-text) [above=of gothic] {
+          \begin{minipage}[b]{2.25cm}
+            \tiny graphische Besonderheiten des gotischen Ductus
+            (TODO)
+          \end{minipage}
+        };
+        \draw<2>[<-,thick,color=blue] (root.south) -- (root-text.north);
+        \draw<3->[->,dotted] (root.south) -- (bracket.north);
+        \draw<4>[<-,thick,color=blue] (bracket.south) -- (bracket-text.north);
+        \draw<5->[->] (root.south) -- (coherent.north);
+        \draw<6>[<-,thick,color=blue] (coherent.south) -- (coherent-text.north);
+        \draw<7->[->] (coherent.south) -- (mensural.north);
+        \draw<8>[<-,thick,color=blue] (mensural.south) -- (mensural-text.north);
+        \draw<9->[->] (coherent.south) -- (gregorian.north);
+        \draw<10>[<-,thick,color=blue] (gregorian.south) -- (gregorian-text.north);
+        \draw<11->[->] (gregorian.south) -- (vaticana.north);
+        \draw<12>[<-,thick,color=blue] (vaticana.west) -- (vaticana-text.east);
+        \draw<13->[->] (gregorian.south) -- (gothic.north);
+        \draw<14>[<-,thick,color=blue] (gothic.north) -- (gothic-text.south);
+      \end{tikzpicture}
+    }
+  }
+\end{frame}
+
+\section{Vergleich mit anderen Systemen}
+
+\begin{frame}
+  \frametitle{Familie der \TeX{}-basierenden Systeme}
+  \tikz[remember picture, overlay] {
+    \node[shift={(3cm,-1.7cm)}] at (current page.north west) (t1) {
+      \begin{tikzpicture}[roundnode/.style={circle, draw=black!60, fill=black!5, very thick, minimum size=2mm},overlay]
+        \draw[] (0,0) rectangle (0,0); % make graphic have a fixed position
+        \node<2->[roundnode] (tex) {\tiny{\TeX}};
+        \node<3->[roundnode] (mutex) [right=of tex] {\tiny{\mutex}};
+        \node<4->[roundnode] (musictex) [right=of mutex]
+                 {\tiny{\musictex}};
+        \node<5->[roundnode] (pmx) [right=of musictex]
+                 {\tiny{\pmx}};
+        \node<6->[roundnode] (mtx) [right=of pmx]
+                 {\tiny{\mtx}};
+        \node<7->[roundnode] (musixtex) [below=of musictex]
+                 {\tiny{\musixtex}};
+        \node<8->[roundnode] (lilypond) [below right=of musixtex]
+                 {\tiny{\lily}};
+        \node<9->[roundnode] (opustex) [below left=of musixtex]
+                 {\tiny{\opustex}};
+
+        \node<10->[roundnode] (lilypond-gregorian) [below=of lilypond] {
+          \begin{minipage}[c]{1cm}
+            \tiny{\texttt{gregorian\\.ly}}
+          \end{minipage}
+        };
+        \node<11->[roundnode] (gregorio) [below=of opustex]
+                 {\tiny{\gregorio}};
+        \draw<3->[->,thick,color=blue] (tex.east) -- (mutex.west);
+        \draw<4->[->,thick,color=blue] (mutex.east) -- (musictex.west);
+        \draw<5->[->,thick,color=blue] (musictex.east) -- (pmx.west);
+        \draw<6->[->,thick,color=blue] (pmx.east) -- (mtx.west);
+        \draw<7->[->,thick,color=blue] (musictex.south) -- (musixtex.north);
+        \draw<8->[->,thick,color=blue] (musixtex.south) -- (lilypond.north);
+        \draw<9->[->,thick,color=blue] (musictex.south) -- (opustex.north);
+        \draw<10->[->,thick,color=blue] (lilypond.south) -- (lilypond-gregorian.north);
+        \draw<10->[->,thick,color=blue] (opustex.east) -- (lilypond-gregorian.west);
+        \draw<11->[->,thick,color=blue] (musixtex.south) -- (gregorio.north);
+        \draw<11->[->,thick,color=blue] (opustex.south) -- (gregorio.north);
+        \draw<11->[->,thick,color=blue] (lilypond-gregorian.west) -- (gregorio.east);
+        \draw<12->[->,thick,color=blue,dotted] (gregorio.south) -- node
+        [label={[label distance=0.02cm]270:\tiny{TODO}}] {}
+        (lilypond-gregorian.west);
+      \end{tikzpicture}
+    }
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finale}
+  \begin{itemize}
+  \item<2->[] {\color<2>{blue}
+    \begin{block}{Zitat}
+      If you are transcribing early music, such as Gregorian square
+      notation or Italian mixed notation, you may want to find an
+      alternative third-party music font, such as one containing
+      neumes.%\nocite{Finale14}
+    \end{block}
+    (Quelle: \url{usermanuals.finalemusic.com}, Handbuch Finale zu v26
+    / Finale Mac 2014)
+  }
+  \item<3-> {\color<3>{blue} $\Rightarrow$ offenbar rein graphisch
+    umgesetzte Neumen, keine musikalische Modellierung in der
+    Software}
+  \item<4-> {\color<4>{blue} Gruppenneumen bestehend aus größerer
+    Anzahl Einzelneumen faktisch nicht möglich wegen kombinatorischer
+    Explosion}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dorico}
+  \begin{itemize}
+  \item<2->[] {\color<2>{blue}
+    \begin{block}{Zitat}
+      We first must review what Dorico does not have at this time in
+      its development:
+      \begin{enumerate}
+      \item No neumes
+      \item No native mensural notation
+      \item No native tempus/prolatio metering
+      \item No native ficta above notes
+      \item No staff/instrument editor (should we want to use a
+        four-line staff, for example)
+      \end{enumerate}
+      % Source: https://www.scoringnotes.com/tutorials/early-music-in-dorico-is-more-than-meets-the-eye/?fbclid=IwAR13zNXvM1QiRawABc3z4o7tgP7jbcuVH9vXWv-8Jdb0DWJfzIBzmafTEnM
+    \end{block}
+    (Quelle: \url{scoringnotes.com}, April 2019)
+  }
+  \item<3-> {\color<3>{blue} $\Rightarrow$ offenbar bislang keine
+    Unterstützung für Neumen oder Ligaturen}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sibelius}
+  \begin{itemize}
+  \item<2->[] {\color<2>{blue}
+    \begin{block}{Zitat (aus dem Sibelius-Forum)}
+      Q: \ldots I would like to write music on a single 4 line staff
+      with medieval Neumes and notation, can Sibelius do this?
+      \ldots\\
+
+      A: Sibelius cannot do it.  You might be interested in software
+      called "Gregorio".
+    \end{block}
+    (Quelle: Forum unter \url{www.sibelius.com}; Datum der Beiträge
+    ohne Jahreszahl, offenbar nach 2014)
+    %Source: http://www.sibelius.com/cgi-bin/helpcenter/chat/chat.pl?com=thread&start=679201&groupid=3&&guest=1
+  }
+  \item<3-> {\color<3>{blue} $\Rightarrow$ offenbar bislang keine
+    Unterstützung für Neumen oder Ligaturen}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Capella}
+  \begin{itemize}
+  \item<2->[] {\color<2>{blue}
+    \begin{block}{Zitat}
+      Five music fonts are provided with capella.  \ldots Plainsong
+      scores using neumes can be produced by pasting individual neumes
+      in place of modern notes.
+    \end{block}
+    (Quelle: \url{capellasoftware.com/features/}, abgerufen am
+    15.01.2020)
+  }
+  \item<3-> {\color<3>{blue} $\Rightarrow$ Offenbar rein graphisch
+    umgesetzte Neumen, keine musikalische Modellierung in der
+    Software}
+  \item<4-> {\color<4>{blue} Beispiel-PDF \texttt{Chant Holmes
+      Faux-bourdon.pdf} zeigt
+    % Quelle: https://www.capellasoftware.com/downloads/documents/Chant%20Holmes%20Faux-bourdon.pdf
+    \begin{itemize}
+    \item {\color<4>{blue} Punctum, Pes und Clivis,}
+    \item {\color<4>{blue}aber keine komplexeren Neumen (Porrectus,
+      Torculus, \ldots),}
+    \item {\color<4>{blue} keine Liqueszenzen, keine weiteren Neumen
+      wie Oriscus,}
+    \item {\color<4>{blue} keine neographischen Neumen wie Linea oder
+      Cavum}
+    \end{itemize}
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\gregorio} Präprozessor auf Basis von \musixtex{} /
+  \opustex
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} Beispiel
+    Eingabesprache:\\\texttt{(c4)KY(f)ri(gfg)e(h.) *()
+      e(ixjvIH'GhvF'E)lé(ghg')i(g)son.(f.) <i>bis</i>(::)}}
+  \item<3-> {\color<3>{blue} Ausgabe:
+    \includegraphics[width=200pt]{../images/gregorio-example.png}}
+  \item<4-> {\color<4>{blue} Entsprechender \lily-Code (nur Noten,
+    kein Text, kein Asteriscus, etc.):\\ \texttt{f \bs{}[
+        g\bs{}melisma \bs{}flexa f \bs{}pes g\bs{}melismaEnd \bs{}]
+      \bs{}augmentum a \bs{}[ \bs{}virga c'\bs{}melisma
+        \bs{}inclinatum bes \bs{}inclinatum a-\bs{}ictus
+        \bs{}inclinatum g \bs{}] \bs{}[ \bs{}virga a \bs{}inclinatum
+        f-\bs{}ictus \bs{}inclinatum e\bs{}melismaEnd \bs{}] \bs{}[
+        g\bs{}melisma \bs{}pes a \bs{}flexa
+        g-\bs{}ictus\bs{}melismaEnd \bs{}] g \bs{}augmentum fis s
+      \bs{}finalis}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\gregorio}
+  Vergleich \gregorio{} -- \lily
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} kompaktere Eingabe in \gregorio{}
+    \color{green}\cmark}
+  \item<3-> {\color<3>{blue} aber kryptische Syntax
+    \color{red}\xmark}
+  \item<4-> {\color<4>{blue} Layout besser als in \lily{}
+    \color{green}\cmark}
+  \item<5-> {\color<5>{blue} Unterstützung für Initiale
+    \color{green}\cmark}
+  \item<6-> {\color<6>{blue} musikalische Logik im Präprozessor
+    \color{yellow}\qmark}
+  \item<7-> {\color<7>{blue} implizite Ligaturen
+    \color{yellow}\qmark}
+  \item<8-> {\color<8>{blue} keine Musik-Funktionen wie
+    z.B. Transposition
+    \color{red}\xmark}
+  \item<9-> {\color<9>{blue} müssten im Präprozessor implementiert
+    werden (vgl.\ \pmx)
+    \color{red}\xmark}
+  \item<10-> {\color<10>{blue} Beschränkungen ähnlich denen, die zu
+    \lily{} führten \color{red}\xmark}
+  \item<11->[]
+    \color<11>{blue} $\Rightarrow$ Evtl.\ Scheme-Funktion
+    für\\ Konvertierung \gregorio{} $\rightarrow$ \lily?
+  \end{itemize}
+\end{frame}
+
+\section{Ausblick}
+
+\begin{frame}
+  \frametitle{Neographie}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} will rhythmische Nuancen besser
+    ausdrücken}
+  \item<3-> {\color<3>{blue} mit zusätzlichen Zeichen seit der
+    Vaticana
+    \begin{lilypond}[]
+      \include "gregorian.ly"
+      \score {
+        \transpose c c' {
+          \[ g \episemInitium \pes a \flexa g \episemFinis \]
+          g-\ictus g4.
+        }
+        \layout { \neumeDemoLayoutNew }
+      }
+    \end{lilypond}
+  }
+  \item<4-> {\color<4>{blue} mit differenzierten Notenköpfen
+    \begin{itemize}
+    \item<5-> {\color<5>{blue} zusätzliche Notenköpfe in \lily{}:\\
+      \texttt{\bs{}cavum}, \texttt{\bs{}linea}, analog zu \opustex{}
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            \[ \cavum a \]
+            \[ \linea a \]
+            \[ \cavum \linea a \] }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+    }
+    \end{itemize}
+    }
+  \item<6-> {\color<6>{blue} mehrere konkurrierende
+    Notationssysteme}
+  \item<7-> {\color<7>{blue} weiteres Beispiel: Fluxus-Notation
+    % vgl. [Goeschl18], pp. 81-82
+    \begin{itemize}
+    \item<8-> {\color<8>{blue} Basis: \emph{nicht} Quadratnotation,
+      sondern St. Gallen}
+    \item<9-> {\color<9>{blue} Ductus Laon nicht berücksichtigt}
+    \end{itemize}
+    }
+  \item<10-> {\color<10>{blue} kaum umfassend
+    möglich\footnote{J.~B.\ Göschl, \textit{Graduale Novum.
+        Kommentar}, S. 78-80}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Graduale Novum (GrN)}
+  Vergleich mit Graduale Trixplex (GT)
+  \begin{itemize}
+  \item<2-> \color<2>{blue} keine Neographie
+  \item<3-> \color<3>{blue} $\Rightarrow$ Zeichen zur rhythmischen
+    Interpretation des GT entfallen
+    \begin{itemize}
+    \item<4-> \color<4>{blue} Episem
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            \[ g \episemInitium \pes a \flexa g \episemFinis \]
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+      $\Rightarrow$
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            \[ g \pes a \flexa g \]
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+    \item<5-> \color<5>{blue} Ictus
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            g-\ictus
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+      $\Rightarrow$
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            \override Voice.Script.transparent = ##t
+            g-\ictus
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+    \item<6-> \color<6>{blue} Moræ
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            g4.
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+      $\Rightarrow$
+      \begin{lilypond}[]
+        \include "gregorian.ly"
+        \score {
+          \transpose c c' {
+            g
+          }
+          \layout { \neumeDemoLayoutNew }
+        }
+      \end{lilypond}
+    \end{itemize}
+  \item<7-> \color<7>{blue} stattdessen wie beim GT adiastematische
+    Neumen
+  \item<8-> \color<8>{blue} anders als GT durchgängig schwarz gedruckt
+  \item<9-> \color<9>{blue} In Klammern gesetzte Vorzeichen
+    \glqq[$\flat$]\grqq\footnote{GrN I, S. 11}
+  \item<10-> \color<10>{blue} Neues Vorzeichen
+    \glqq$\sharp$\grqq\footnote{GrN I, S. 309}
+    % vgl. [Goeschl18], pp. 58-67
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Offene Punkte bei \lily}
+  \begin{itemize}
+  \item<2-> \color<2>{blue} Textausrichtung
+    \begin{itemize}
+    \item<3-> \color<3>{blue} Silbenvokal gebunden an führende Neume in Ligatur
+    \item<4-> \color<4>{blue} horzontal zentriert
+    \end{itemize}
+  \item<5-> \color<5>{blue} Bessere Abstände zwischen Ligaturen
+  \item<6-> \color<6>{blue} Unterstützung für Initiale
+  \item<7-> \color<7>{blue} Besonderheiten des Graduale Novum
+    \begin{itemize}
+    \item<8-> \color<8>{blue} Adiastematische Neumen (wie auch schon bei GT)
+    \item<9-> \color<9>{blue} In Klammern gesetzte Vorzeichen
+      \glqq[$\flat$]\grqq
+    \item<10-> \color<10>{blue} Neues Vorzeichen \glqq$\sharp$\grqq
+    \end{itemize}
+  \item<11-> \color<11>{blue} Eingabesprache ähnlich \gregorio?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \Huge{Fragen?}
+  \end{center}
+\end{frame}
+
+% backup slides
+
+\begin{frame}
+  \frametitle{Abkürzungen}
+  \begin{tabular}{ll}
+    A & Handschrift Paris B.N.\ lat.~776 (Albi, 2.~Hälfte 11.~Jh.)\\
+    Bv & Handschrift Benevent 34 (11./12.~Jh.)\\
+    BzG & Beiträge zur Gregorianik\\
+    Ch & Handschrift Chartres 47 (10.~Jh.)\\
+    E & Handschrift Einsiedeln 121 (2.~Hälfte 10.~Jh.)\\
+    GrN I & Gradual Novum, Band I: De Dominicis et Festis (2011)\\
+    GrN II & Gradual Novum, Band II: De Feriis et Sanctis (2018)\\
+    GR & Graduale Romanum (1908)\\
+    GT & Graduale Triplex (1979)\\
+    K & Handschrift Graz 807 (Klosterneuburg, 12.~Jh.)\\
+    L & Handschrift Laon 239 (ca. 930)\\
+    Vat & Editio Vaticana (1905/1908)\\
+    Y & Handschrift Paris B.N.\ lat.~903 (St.~Yreix, 11.~Jh.)
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \nocite{LilyPond03}
+  \nocite{Szukics01}
+  \nocite{Goeschl18}
+  \frametitle{Literaturverweise}
+  \bibliographystyle{acl}
+  \bibliography{mec2020}
+\end{frame}
+
+\end{document}
+
+% TODO: "Rendering" -> ???
+% TODO: Mehr zu Gregorio / Folie splitten
+% TODO: TeX-Familie aufsplitten
+% TODO: Weiteres Argument für High-Level-Modellierung: vgl. MEI-Beispiel (Stacato-Punkt bei Transposition)
+% TODO: Dorico?
+% TODO: GregorianTranscriptionVoice
+
+%  Local Variables:
+%    coding:utf-8
+%    mode:LaTeX
+%  End:
