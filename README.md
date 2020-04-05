@@ -331,23 +331,38 @@ source code, when appropriate.
 ## List of Arts Projects and Public Performances
 
 * 2019
-  * _Respektomat_.  In _Mitgliederausstellung_, Poly Galerie Karlsruhe
-    (group show).
-  * _Paint it yourself._ In [_10 Tage – 10
+  * _Respektomat_.  In _Mitgliederausstellung „Respekt“_, Poly Galerie
+    Karlsruhe, Dec. 6th-29th, 2019 (group show).
+  * _Paint it yourself._ In _[10 Tage – 10
     Räume](http://www.und-1.de/10tage10raeume/index.html): Tag 4: Poly
-    Galerie: „Polymaths und Polymorph“_, Poly Galerie Karlsruhe (group
-    show).
+    Galerie: „Polymaths und Polymorph“_, Poly Galerie Karlsruhe, June
+    27th - July 6th, 2019 (group show).<br />
+    [Resume](https://www.youtube.com/watch?v=VHPs8b5SiW0)
 
 * 2017
-  * _Freiflug._ In _UND#9_ (Kunstausstellung), Dragoner-Kaserne
-    Karlsruhe (group show).
+  * _Freiflug._ In _UND#9_ (arts exhibition), Dragoner-Kaserne
+    Karlsruhe, July 20th-23rd, 2017 (group show).<br />
+    [Resume](https://www.youtube.com/watch?v=pDwdSbA5rck)
 
 * 2016
-  * _Paint We_. In _Künstler bei der CAS_ @ CAS Software AG, Karlsruhe
-    (group show).
-  * _Color Moves Sound_ @ Poly Galerie Karlsruhe (solo exhibition).
+  * _Paint We_. In _Künstler bei der CAS_ @ CAS Software AG,
+    Karlsruhe, July 29th - Aug 31st, 2016 (group show).
+  * _Color Moves Sound_ @ Poly Galerie Karlsruhe (solo exhibition),
+    May 6th-15th, 2016.<br />
+    [Preview](https://www.youtube.com/watch?v=7wb6pat2H8s)
+
+* 2015
+ * _Klangsäule_.  In _UND#8_, Dragoner-Kaserne Karlsruhe,
+   Oct. 15th-18th, 2015 (group show).
+ * _Sound Column_ @ Schaufensterwettbewerb Karlsruhe, June 20th - July
+   19th, 2015 (group show).<br />
+   [Preview](https://www.youtube.com/watch?v=0mqau10weyE)
 
 * 2014
+ * [_Color — Sound —
+    Column_](http://poly-galerie.org/archiv_2014-11-14_hirling_reuter.html)
+    @ Poly Galerie Karlsruhe, Nov. 14th-23rd, 2014 (exhibition
+    conjointly with Joachim Hirling).
   * [_Random
     noise_](https://zkm.de/en/event/2014/05/linux-audio-conference-2014-playroom). Concert
     for Sound Column Four Hands (concept + programming + direction) @
@@ -367,40 +382,46 @@ source code, when appropriate.
       results in big chaos, the overall informational content
       approaches zero, resulting in random noise.
     </details>
-* 2015
- * _Klangsäule_.  In _UND#8_, Dragoner-Kaserne Karlsruhe (group show).
- * _Sound Column_ @ Schaufensterwettbewerb Karlsruhe (group show).
- * _Color — Sound — Column_ @ Poly Galerie Karlsruhe (exhibition
-    conjointly with Joachim Hirling).
 
 * 2013
-  * _Lauschangriff_ @ Poly Galerie Karlsruhe (solo exhibition).
+  * [_Lauschangriff_](http://poly-galerie.org/archiv_2013-08-20_reuter.html)
+    @ Poly Galerie Karlsruhe, Aug. 20th-21st, 2013 (solo exhibition).
 
 * 2012
-  * _UND#7_ (Kunstausstellung), Alter Schlachthof Karlsruhe (group
-    show).
+  * _UND#7_ (arts exhibition), Alter Schlachthof Karlsruhe, March
+    7th-11th, 2012 (group show).
 
 * 2011
-  * _UND#6_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
+  * _UND#6_ (arts exhibition), Nancy-Halle Karlsruhe, March 8th-13th,
+    2011 (group show).
   * _10 Jahre Poly Produzentengalerie e.V._, Poly @ Oberwelt Stuttgart
     (group show).
 
 * 2010
-  * _UND#5_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
+  * _UND#5_ (arts exhibition), Nancy-Halle Karlsruhe, March 2nd-7th,
+    2010 (group show).
+
+[//]: # "TODO: Exhibition @ Immobilien Laub"
 
 * 2009
-  * _9/11_ @ Poly SummerTime, Poly Galerie Karlsruhe (solo
-    exhibition).
-  * _UND#4_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
-  * _Wahlheimat Karlsruhe_ @ ZKM Karlsruhe (group show).
+  * _9/11_ @ [Poly SummerTime
+    2009](http://poly-galerie.org/archiv_2009%20-%2008%20-%20august_summertime.html),
+    Poly Galerie Karlsruhe, Sep. 11th-13th, 2009 (solo exhibition).
+  * _UND#4_ (arts exhibition), Nancy-Halle Karlsruhe, March 3rd-8th,
+    2009 (group show).
+  * _Walwanderung_, [_Wahlheimat
+    Karlsruhe_](https://zkm.de/de/event/2009/06/wahlheimat) @ ZKM
+    Karlsruhe, June 6th - Sep. 28th, 2009 (group show).
   * _Effetti transitori per cantico delle creature_. Solo concert @
-    LAC 2009, Parma, Italy.
+    LAC 2009, April 18th, 2009, Parma, Italy.
 
 * 2008
-  * _UND#3_ (Kunstausstellung), ehem. Versorgungsamt Karlsruhe (group
-    show).
-  * _Poly @ Atelierhaus Merkenicherstraße Köln_, Atelierhaus
-    Merkenicherstraße Köln (group show).
+  * _UND#3_ (arts exhibition), ehem. Versorgungsamt Karlsruhe,
+    Feb. 26th - March 2nd, 2008 (group show).
+  * [_Poly @ Atelierhaus Merkenicherstraße
+    Köln_](http://poly-galerie.org/archiv_2008_koeln%20poly_mai.html),
+    Atelierhaus Merkenicherstraße Köln, May 30st - June 1st, 2008
+    (group show).
 
 * 2005
   * _Kampf von Marathon_ — comp. + prod. of music for theatre
