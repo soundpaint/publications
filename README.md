@@ -327,3 +327,101 @@ source code, when appropriate.
   Management (SCM-6) in conjunction with the 18th International
   Conference on Software Engineering (ICSE'96)_, pp. 166-174. Lecture
   Notes in Computer Science (LNCS), Springer. ISBN 3-540-61964-X.
+
+## List of Arts Projects and Public Performances
+
+* 2019
+  * _Respektomat_.  In _Mitgliederausstellung_, Poly Galerie Karlsruhe
+    (group show).
+  * _Paint it yourself._ In [_10 Tage – 10
+    Räume](http://www.und-1.de/10tage10raeume/index.html): Tag 4: Poly
+    Galerie: „Polymaths und Polymorph“_, Poly Galerie Karlsruhe (group
+    show).
+
+* 2017
+  * _Freiflug._ In _UND#9_ (Kunstausstellung), Dragoner-Kaserne
+    Karlsruhe (group show).
+
+* 2016
+  * _Paint We_. In _Künstler bei der CAS_ @ CAS Software AG, Karlsruhe
+    (group show).
+  * _Color Moves Sound_ @ Poly Galerie Karlsruhe (solo exhibition).
+
+* 2014
+  * [_Random
+    noise_](https://zkm.de/en/event/2014/05/linux-audio-conference-2014-playroom). Concert
+    for Sound Column Four Hands (concept + programming + direction) @
+    LAC 2014, ZKM, Karlsruhe, Germany.<br />
+    <details>
+      <summary>Abstract</summary>
+      Two players give a concert in a competitive manner. They put and
+      rearrange colored shapes and symbols on an advertising column
+      that slowly rotates. The surface of the column is scanned, and a
+      computer program renders the shapes and symbols into sound, as
+      they move under a virtual playhead cursor that is projected onto
+      the column.<br />
+      Since the players compete in uncoordinated fashion rather than
+      cooperate, the overall picture grows wildly. Both players are
+      struggling to dominate the system by putting as much information
+      as possible onto the column. As their competition finally
+      results in big chaos, the overall informational content
+      approaches zero, resulting in random noise.
+    </details>
+* 2015
+ * _Klangsäule_.  In _UND#8_, Dragoner-Kaserne Karlsruhe (group show).
+ * _Sound Column_ @ Schaufensterwettbewerb Karlsruhe (group show).
+ * _Color — Sound — Column_ @ Poly Galerie Karlsruhe (exhibition
+    conjointly with Joachim Hirling).
+
+* 2013
+  * _Lauschangriff_ @ Poly Galerie Karlsruhe (solo exhibition).
+
+* 2012
+  * _UND#7_ (Kunstausstellung), Alter Schlachthof Karlsruhe (group
+    show).
+
+* 2011
+  * _UND#6_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
+  * _10 Jahre Poly Produzentengalerie e.V._, Poly @ Oberwelt Stuttgart
+    (group show).
+
+* 2010
+  * _UND#5_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
+
+* 2009
+  * _9/11_ @ Poly SummerTime, Poly Galerie Karlsruhe (solo
+    exhibition).
+  * _UND#4_ (Kunstausstellung), Nancy-Halle Karlsruhe (group show).
+  * _Wahlheimat Karlsruhe_ @ ZKM Karlsruhe (group show).
+  * _Effetti transitori per cantico delle creature_. Solo concert @
+    LAC 2009, Parma, Italy.
+
+* 2008
+  * _UND#3_ (Kunstausstellung), ehem. Versorgungsamt Karlsruhe (group
+    show).
+  * _Poly @ Atelierhaus Merkenicherstraße Köln_, Atelierhaus
+    Merkenicherstraße Köln (group show).
+
+* 2005
+  * _Kampf von Marathon_ — comp. + prod. of music for theatre
+    performance _Chaos Theater_ @ UniTheater Karlsruhe.
+
+* 2004
+  * _Kunstprozession_ — comp. + prod. + perform. with G. Wolfstieg
+    (mus. dir.) @ Europ. Cultural Days Karlsruhe.
+
+* 2003
+  * _Mobi Song_ — comp. + prod. of anniversary song for Mobile
+    Spieleaktion @ Stadtjugendausschuss Karlsruhe.
+
+* 1998
+  * _1848/49_ — comp. + prod. of music @ Studio für elektronische
+    Musik Karlsruhe, presented at anniversary of Hochschule Karlsruhe.
+
+* 1995
+  * _Metrisches Gewitter_ — comp. + prod. of music @ Studio für
+    elektronische Musik Karlsruhe.
+
+* 1982
+  * _Marienwürmchen_ aus _Des Knaben Wunderhorn_, solo performance
+    (with piano accomp.) @ St. Martins-Chorknaben, Bad Ems.
