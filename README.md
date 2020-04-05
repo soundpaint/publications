@@ -16,6 +16,17 @@ source code, when appropriate.
   Notationssoftware am Beispiel von LilyPond._ Talk @ Music Engraving
   Conference 2020, Jan 18th 2020, Mozarteum Salzburg, Austria.<br />
   [Slides](https://gitlab.com/MusicEngravingConference/2020/-/raw/master/Talks/Juergen%20Reuter/Modellierung%20gregorianischer%20Neumen.pdf?inline=false)
+  <details>
+    <summary>Abstract</summary>
+    Supporting Gregorian neumes in music notation software requires
+    formal modelling of music representation, as storage format and as
+    input language. Since neumes notation differs significantly from
+    subsequent music notation, we give a short historical survey and
+    explore a concept for musically adequate modelling based on the
+    Solesmes monks’ 19th century research and more recent findings,
+    including composition of ligatures from basic neumes, and compare
+    it with different approaches.
+  </details>
 
 * _RetroComputing: Emulator VZ200 / Z80._ Talk @ GPN19, Entropia e.V.,
   Chaos Computer Club Karlsruhe, Karlsruhe, Germany, May 31st,
@@ -23,6 +34,32 @@ source code, when appropriate.
   [Video](https://media.ccc.de/v/gpn19-114-retrocomputing-emulator-vz200-z80)
   [Slides](https://github.com/soundpaint/VZ200-Emulator/blob/master/src/doc/talk_gpn19_slides.odp)
   [Project Repo](https://github.com/soundpaint/VZ200-Emulator)
+  <details>
+    <summary>Abstract</summary>
+    In this talk, I present my project that implements a software
+    emulation of a Z80 CPU and all other parts of a VZ200 computer
+    (the hardware originally built around 1983). The emulator software
+    is written in Java, yet fast enough to run in realtime on current
+    modest performance hardware. Special features of the emulator
+    include (among others):
+
+    * a monitor control program with features for editing, running and
+      debugging Z80 assember code,
+
+    * a retro-fit mechanism that allows for annotation of assembler
+      instructions (labels, comments, etc.)
+
+    * a virtual clock mechanism that allows for realtime mapping of
+      the emulated speaker's status onto state-of-the-art, sample
+      buffer based sound card devices,
+
+    * an abstract, mnemonic-level, yet still flexible architecture of
+      the CPU emulation that allows for straight-forward extension or
+      replacement of new or alternative op-codes without explicitly
+      fiddling around with deeply nested instruction dispatch tables.
+
+    Project Source Code: https://github.com/soundpaint/VZ200-Emulator
+  </details>
 
 * _Hacking a 15$ Quadcop for Adding a Computer Interface for Flight
   Control._ Talk @ GPN18, Entropia e.V., Chaos Computer Club
@@ -30,11 +67,61 @@ source code, when appropriate.
   [Video](https://media.ccc.de/v/gpn18-169-hacking-a-15-quadcop-for-adding-a-computer-interface-for-flight-control)
   [Slides](https://github.com/soundpaint/QuadCopHack/blob/master/doc/talk-gpn18/quadcop-talk.odp)
   [Project Repo](https://github.com/soundpaint/QuadCopHack)
+  <details>
+    <summary>Abstract</summary>
+    In this talk I will present how I modified the remote control of a
+    cheap 15$ quadcop in order to add a computer interface:
+
+    * First, I developed a small hardware board for signal tapping
+      from and signal injection into the quadcop's remote control.
+
+    * Next, I connected an Arduino board and developed a small
+      software written in the C programming language, that does
+      real-time signal A/D conversion of incoming / outgoing flight
+      control signals, time-stamping and low-level signal processing
+      of incoming signal data, and buffering of incoming and outgoing
+      signal data.
+
+    * Third, I connected a Raspberry Pi 3 board to the Arduino board
+      and developed a Java Application that retrieves flight control
+      signal data from the Arduino with the possibility to record it
+      to a file. Also, the application allows for replaying recorded
+      data back to the Arduino for signal injection into the quadcop's
+      remote control.
+
+    * The next step would be to extend the Java application for either
+      editing recorded flight control data or creating completely new
+      flight control data from scratch.
+
+    Schematics and software are available as open source licensed
+    under GNU GPL v3, see here:
+    https://github.com/soundpaint/QuadCopHack
+  </details>
 
 * _Exploiting Coloured Hearing for Research on Acoustic Perception._
   Lightning Talk @ Linux Audio Conference 2014 (LAC2014).  ZKM
   Karlsruhe, Karlsruhe, Germany, May 2nd, 2014.<br />
   [Video](https://lac.linuxaudio.org/2014/video.php?id=19)
+  <details>
+    <summary>Abstract</summary>
+    Coloured hearing is a form of synaesthesia with co-perception of
+    acoustic stimuli as visual effects. In contrast to acquired or
+    induced synaesthesia, the genuine form is thought to origin very
+    early in life and to not relevantly change over time. Therefore,
+    finding correlations between acoustic stimuli and visual effects
+    with genuine coloured hearing and evaluating their visual
+    significance even on adults gives hints on which acoustic
+    properties have been significant for an individual since early
+    life. With this snapshot of significance taken from many
+    individuals, we hope to better identify the border between
+    congenital perception and perception habits created from cultural
+    influence. Knowledge about this border is essential for
+    composition of contemporary music, as it marks the limit where
+    musical parameters go beyond trainable perception and thus render
+    irrelevant as compositorial means. So far, for a preparatory case
+    study we developed a set of sounds, tested it on a single genuine
+    coloured hearing individual and present first results.
+  </details>
 
 * _Case Study: Building an Out Of The Box Raspberry Pi Modular
   Synthesizer._ In _Proceedings of the 12th International Linux Audio
@@ -43,6 +130,23 @@ source code, when appropriate.
   [Paper](http://lac.linuxaudio.org/2014/papers/12.pdf)
   [Slides](http://lac.linuxaudio.org/2014/download/raspmodsyn.pdf)
   [Video](https://lac.linuxaudio.org/2014/video.php?id=9)
+  <details>
+    <summary>Abstract</summary>
+    The idea is simple and obvious: Take some Raspberry Pi computing
+    units, each as a reusable synthesizer module. Connect them via a
+    network. Connect a notebook or PC to control and monitor
+    them. Start playing on your virtually analog modular synthesizer.
+    However, is existing Linux audio software sufficiently mature to
+    implement this vision out of the box? We investigate how far we
+    get in building such a synthesizer, what existing software to
+    choose, analyse what limits we hit and what features still need to
+    be implemented to make our vision become reality.
+  </details>
+  <details>
+    <summary>Keywords</summary>
+    Raspberry Pi, Virtual Anolog Modular Synthesizer, Distributed
+    Networked Audio
+  </details>
 
 * _Considering Transient Effect in Spectrum Analysis._ In _Proceedings
   of the 7th International Linux Audio Conference (LAC2009)_,
@@ -51,6 +155,20 @@ source code, when appropriate.
   [Paper](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/15.pdf)
   [Slides](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/TransientEffects.pdf)
   [Video](http://lad.linuxaudio.org/events/2009_cdm/videos/)
+  <details>
+    <summary>Abstract</summary>
+    Signal processing with discrete Fourier transform (DFT) works well
+    in standard settings, but is unsatisfying for rapid changes in
+    signal spectra. We illustrate and analyze this phenomenon, develop
+    a novel transform and prove its close relation to the Laplace
+    transform. We deploy our transform for deriving a replacement for
+    the sliding window DFT. Our approach features transient effect and
+    hence shows more natural response to rapid spectral changes.
+  </details>
+  <details>
+    <summary>Keywords</summary>
+    signal processing, DFT, sliding window technique, spectral analysis
+  </details>
 
 * _Modulare Softwaresynthese auf Mehrkern-Prozessoren._ Talk @ GPN7,
   Entropia e.V., Chaos Computer Club Karlsruhe, Karlsruhe, Germany,
@@ -63,6 +181,24 @@ source code, when appropriate.
   28th, 2008.  ISBN 978-80-7399-362-7.<br />
   [Paper](http://lac.linuxaudio.org/2008/download/papers/8.pdf)
   [Slides](https://lac.linuxaudio.org/2008/download/slides/8/lac2008_paper8_slides.pdf)
+  <details>
+    <summary>Abstract</summary>
+    Recently, CPU speed increases only slowly, while the number of
+    transistors per chip keeps growing exponentially. Consequently,
+    processors with multi-core architectures are pervading the
+    market. Unfortunately, most existing software still can not
+    exploit the parallelism. Since modular software sythesis
+    implementations typically simulate parallel hardware, they are
+    designated to run on parallel hardware. We examine different
+    approaches for parallelization of a modular software synthesizer
+    and discuss their advantages and disadvantages with respect to
+    both the performance gain and the impact on the software
+    architecture.
+  </details>
+  <details>
+    <summary>Keywords</summary>
+    modular synthesis, multicore architectures, parallelization, scheduling, performance analysis
+  </details>
 
 * Jürgen Reuter, Frank Padberg.  _Towards a Change Specification
   Language for API Evolution._ In _Proceedings of the 1st Workshop on
@@ -78,6 +214,22 @@ source code, when appropriate.
   Karlsruhe, Karlsruhe, Germany, April 30th, 2006.<br />
   [Paper](http://lac.zkm.de/2006/papers/lac2006_juergen_reuter.pdf)
   [Slides](http://lac.zkm.de/2006/presentations/lac2006_juergen_reuter_slides.pdf)
+  <details>
+    <summary>Abstract</summary>
+    Modern music production systems provide a plethora of sound
+    resources, e.g.hundreds or thousands of sound patches on a
+    synthesizer. The more the number of available sounds grows, the
+    more difficult it becomes for the user to find the desired sound
+    resource for a particular purpose, thus demanding for advanced
+    retrieval techniques based on sound classification. This paper
+    gives a short survey of existing approaches on classification and
+    retrieval of sound resources, discusses them and presents an
+    advanced approach based on ontological knowledge processing.
+  </details>
+  <details>
+    <summary>Keywords</summary>
+    classification of sounds, sound resource lookup, ontologies, OWL
+  </details>
 
 * Jürgen Reuter, Walter F. Tichy. _Logging Kernel Events on Clusters._
   In _Future generation computer systems (FGCS 1295)_, vol. 22,
