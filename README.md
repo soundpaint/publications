@@ -347,19 +347,19 @@ source code, when appropriate.
 * 2016
   * _Paint We_. In _Künstler bei der CAS_ @ CAS Software AG,
     Karlsruhe, July 29th - Aug 31st, 2016 (group show).
-  * _Color Moves Sound_ @ Poly Galerie Karlsruhe (solo exhibition),
-    May 6th-15th, 2016.<br />
+  * _Color Moves Sound_ @ Poly Galerie Karlsruhe, May 6th-15th, 2016
+    (solo exhibition).<br />
     [Preview](https://www.youtube.com/watch?v=7wb6pat2H8s)
 
 * 2015
- * _Klangsäule_.  In _UND#8_, Dragoner-Kaserne Karlsruhe,
-   Oct. 15th-18th, 2015 (group show).
- * _Sound Column_ @ Schaufensterwettbewerb Karlsruhe, June 20th - July
-   19th, 2015 (group show).<br />
-   [Preview](https://www.youtube.com/watch?v=0mqau10weyE)
+  * _Klangsäule_.  In _UND#8_, Dragoner-Kaserne Karlsruhe,
+    Oct. 15th-18th, 2015 (group show).
+  * _Sound Column_ @ Schaufensterwettbewerb Karlsruhe, June 20th - July
+    19th, 2015 (group show).<br />
+    [Preview](https://www.youtube.com/watch?v=0mqau10weyE)
 
 * 2014
- * [_Color — Sound —
+  * [_Color — Sound —
     Column_](http://poly-galerie.org/archiv_2014-11-14_hirling_reuter.html)
     @ Poly Galerie Karlsruhe, Nov. 14th-23rd, 2014 (exhibition
     conjointly with Joachim Hirling).
@@ -394,8 +394,9 @@ source code, when appropriate.
 * 2011
   * _UND#6_ (arts exhibition), Nancy-Halle Karlsruhe, March 8th-13th,
     2011 (group show).
-  * _10 Jahre Poly Produzentengalerie e.V._, Poly @ Oberwelt Stuttgart
-    (group show).
+  * [_Polyozoikum – 10 Jahre Poly Produzentengalerie
+    e.V._](http://poly-galerie.org/archiv_2011%20-%2006-%20juni%20-%20poly%20bei%20oberwelt.html),
+    Poly @ Oberwelt Stuttgart, June 3rd-20th, 2011 (group show).
 
 * 2010
   * _UND#5_ (arts exhibition), Nancy-Halle Karlsruhe, March 2nd-7th,
@@ -418,10 +419,10 @@ source code, when appropriate.
 * 2008
   * _UND#3_ (arts exhibition), ehem. Versorgungsamt Karlsruhe,
     Feb. 26th - March 2nd, 2008 (group show).
-  * [_Poly @ Atelierhaus Merkenicherstraße
-    Köln_](http://poly-galerie.org/archiv_2008_koeln%20poly_mai.html),
-    Atelierhaus Merkenicherstraße Köln, May 30st - June 1st, 2008
-    (group show).
+  * [_was damit
+    zusammenhängt_](http://poly-galerie.org/archiv_2008_koeln%20poly_mai.html),
+    Poly @ Atelierhaus Merkenicherstraße Köln, May 30st - June 1st,
+    2008 (group show).
 
 * 2005
   * _Kampf von Marathon_ — comp. + prod. of music for theatre
