@@ -9,8 +9,9 @@ source code, when appropriate.
 
 * _Notensatz im 21. Jahrhundert – Entwicklungen und
   Perspektiven. Bericht von der Notensatzkonferenz in Salzburg._ In
-  _Musica Sacra_, vol. 140, no. 2 (Ausg. 2/2020), pp. 80-81, April
-  1st, 2020.  Bärenreiter-Verlag, Kassel, Germany.
+  [_Musica Sacra_](https://www.musica-sacra-online.de), vol. 140,
+  no. 2 (Ausg. 2/2020), pp. 80-81, April 1st, 2020.
+  Bärenreiter-Verlag, Kassel, Germany.
 
 * _Formale Modellierung gregorianischer Neumen zur Repräsentation in
   Notationssoftware am Beispiel von LilyPond._ Talk @ Music Engraving
@@ -332,7 +333,8 @@ source code, when appropriate.
 
 * 2019
   * _Respektomat_.  In _Mitgliederausstellung „Respekt“_, Poly Galerie
-    Karlsruhe, Dec. 6th-29th, 2019 (group show).
+    Karlsruhe, Dec. 6th-29th, 2019 (group show).<br />
+    [Preview](https://www.inka-magazin.de/kunst-design/poly-mitgliederausstellung-jahresrueckblick-mit-respekt.html)
   * _Paint it yourself._ In _[10 Tage – 10
     Räume](http://www.und-1.de/10tage10raeume/index.html): Tag 4: Poly
     Galerie: „Polymaths und Polymorph“_, Poly Galerie Karlsruhe, June
@@ -429,12 +431,14 @@ source code, when appropriate.
     performance _Chaos Theater_ @ UniTheater Karlsruhe.
 
 * 2004
-  * _Kunstprozession_ — comp. + prod. + perform. with G. Wolfstieg
-    (mus. dir.) @ Europ. Cultural Days Karlsruhe.
+  * [_Kunstprozession_](http://www.wolfstieg.com/D/Dokumente/Yol/Texte.htm)
+    — comp. + prod. + perform. with G. Wolfstieg (mus. dir.) @
+    European Cultural Days Karlsruhe, May 2nd and 19th, 2004.
 
 * 2003
   * _Mobi Song_ — comp. + prod. of anniversary song for Mobile
-    Spieleaktion @ Stadtjugendausschuss Karlsruhe.
+    Spieleaktion @ Stadtjugendausschuss Karlsruhe, performed on _Das
+    Fest Karlsruhe_, July 19th, 2003.
 
 * 1998
   * _1848/49_ — comp. + prod. of music @ Studio für elektronische
