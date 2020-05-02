@@ -284,7 +284,7 @@ source code, when appropriate.
   Sommersemester 2004._ Technical Report TR2005-11.  Institut für
   Programmstrukturen und Datenorganisation (IPD), Universität
   Karlsruhe, Karlsruhe, Germany, July 2004.
-  [Paper](https://ps.ipd.kit.edu/downloads/ta_2004_beitraege_grid_computing.pdf)
+  [Paper](http://www.ipd.uni-karlsruhe.de/tichy/uploads/publikationen/74/tr2005-11.pdf)
   <details>
     <summary>Abstract</summary>
     Im Sommersemester 2004 wurde im Seminar „Grid Computing und
