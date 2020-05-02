@@ -32,9 +32,11 @@ source code, when appropriate.
 * _RetroComputing: Emulator VZ200 / Z80._ Talk @ GPN19, Entropia e.V.,
   Chaos Computer Club Karlsruhe, Karlsruhe, Germany, May 31st,
   2019.<br />
-  [Video](https://media.ccc.de/v/gpn19-114-retrocomputing-emulator-vz200-z80)
-  [Slides](https://github.com/soundpaint/VZ200-Emulator/blob/master/src/doc/talk_gpn19_slides.odp)
+
+  [Video](https://media.ccc.de/v/gpn19-114-retrocomputing-emulator-vz200-z80) |
+  [Slides](https://github.com/soundpaint/VZ200-Emulator/blob/master/src/doc/talk_gpn19_slides.odp) |
   [Project Repo](https://github.com/soundpaint/VZ200-Emulator)
+
   <details>
     <summary>Abstract</summary>
     In this talk, I present my project that implements a software
@@ -65,8 +67,8 @@ source code, when appropriate.
 * _Hacking a 15$ Quadcop for Adding a Computer Interface for Flight
   Control._ Talk @ GPN18, Entropia e.V., Chaos Computer Club
   Karlsruhe, Karlsruhe, Germany, May 11th, 2018.<br />
-  [Video](https://media.ccc.de/v/gpn18-169-hacking-a-15-quadcop-for-adding-a-computer-interface-for-flight-control)
-  [Slides](https://github.com/soundpaint/QuadCopHack/blob/master/doc/talk-gpn18/quadcop-talk.odp)
+  [Video](https://media.ccc.de/v/gpn18-169-hacking-a-15-quadcop-for-adding-a-computer-interface-for-flight-control) |
+  [Slides](https://github.com/soundpaint/QuadCopHack/blob/master/doc/talk-gpn18/quadcop-talk.odp) |
   [Project Repo](https://github.com/soundpaint/QuadCopHack)
   <details>
     <summary>Abstract</summary>
@@ -128,8 +130,8 @@ source code, when appropriate.
   Synthesizer._ In _Proceedings of the 12th International Linux Audio
   Conference (LAC2014)_, pp. 41-48.  ZKM, Karlsruhe, Germany, May 1st,
   2014.<br />
-  [Paper](http://lac.linuxaudio.org/2014/papers/12.pdf)
-  [Slides](http://lac.linuxaudio.org/2014/download/raspmodsyn.pdf)
+  [Paper](http://lac.linuxaudio.org/2014/papers/12.pdf) |
+  [Slides](http://lac.linuxaudio.org/2014/download/raspmodsyn.pdf) |
   [Video](https://lac.linuxaudio.org/2014/video.php?id=9)
   <details>
     <summary>Abstract</summary>
@@ -153,8 +155,8 @@ source code, when appropriate.
   of the 7th International Linux Audio Conference (LAC2009)_,
   pp. 153-160.  Instituzione Casa della Musica, Grafiche Step, Parma,
   Italy, April 16th, 2009.<br />
-  [Paper](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/15.pdf)
-  [Slides](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/TransientEffects.pdf)
+  [Paper](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/15.pdf) |
+  [Slides](https://lac.linuxaudio.org/2009/cdm/Saturday/15_Reuter/TransientEffects.pdf) |
   [Video](http://lad.linuxaudio.org/events/2009_cdm/videos/)
   <details>
     <summary>Abstract</summary>
@@ -180,7 +182,7 @@ source code, when appropriate.
   _Proceedings of the 6th International Linux Audio Conference
   (LAC2008)_, pp. 68-76.  Academy of Media Arts, Köln, Germany, Feb
   28th, 2008.  ISBN 978-80-7399-362-7.<br />
-  [Paper](http://lac.linuxaudio.org/2008/download/papers/8.pdf)
+  [Paper](http://lac.linuxaudio.org/2008/download/papers/8.pdf) |
   [Slides](https://lac.linuxaudio.org/2008/download/slides/8/lac2008_paper8_slides.pdf)
   <details>
     <summary>Abstract</summary>
@@ -213,7 +215,7 @@ source code, when appropriate.
 * _Ontological Processing of Sound Resources._ In _Proceedings of the
   4th International Linux Audio Conference (LAC2006)_, pp. 97-104. ZKM
   Karlsruhe, Karlsruhe, Germany, April 30th, 2006.<br />
-  [Paper](http://lac.zkm.de/2006/papers/lac2006_juergen_reuter.pdf)
+  [Paper](http://lac.zkm.de/2006/papers/lac2006_juergen_reuter.pdf) |
   [Slides](http://lac.zkm.de/2006/presentations/lac2006_juergen_reuter_slides.pdf)
   <details>
     <summary>Abstract</summary>
@@ -259,7 +261,7 @@ source code, when appropriate.
 * _SoundPaint — Painting Music._ In _Proceedings of the 3rd
   International Linux Audio Conference (LAC2005)_, ZKM Karlsruhe,
   Karlsruhe, Germany, April 22nd, 2005.<br />
-  [Paper](http://lac.zkm.de/2005/papers/juergen_reuter.pdf)
+  [Paper](http://lac.zkm.de/2005/papers/juergen_reuter.pdf) |
   [Slides](http://lac.zkm.de/2005/slides/juergen_reuter_slides.pdf)
   <details>
     <summary>Abstract</summary>
@@ -288,7 +290,8 @@ source code, when appropriate.
   in conjunction with the International Conference on Computational
   Science 2003 (ICCS'2003), Part IV_. Lecture Notes in Computer
   Science (LNCS), pp. 63-72. Springer Verlag, Berlin Heidelberg New
-  York/NY, June 2nd, 2003.
+  York/NY, June 2nd, 2003.<br />
+  [Slides](https://github.com/soundpaint/publications/blob/master/iccs2003/iccs2003.ppt)
 
 * Bernd Haumacher, Thomas Moschny, Jürgen Reuter, Walter
   F. Tichy. _Transparent Distributed Threads for Java._ In _Proc. of
