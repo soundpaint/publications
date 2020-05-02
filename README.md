@@ -284,6 +284,20 @@ source code, when appropriate.
   Sommersemester 2004._ Technical Report TR2005-11.  Institut für
   Programmstrukturen und Datenorganisation (IPD), Universität
   Karlsruhe, Karlsruhe, Germany, July 2004.
+  [Paper](https://ps.ipd.kit.edu/downloads/ta_2004_beitraege_grid_computing.pdf)
+  <details>
+    <summary>Abstract</summary>
+    Im Sommersemester 2004 wurde im Seminar „Grid Computing und
+    Peer-to-Peer Systeme“ eine Reihe aktueller Themen aus den Gebieten
+    Grid Computing, Peer-to-Peer-Systeme und Ad-Hoc-Netzwerke
+    angeboten.  Jeder Teilnehmer wählte hieraus ein Thema, um darüber
+    in der Form eines medial gestützten Vortrages zu referieren.  Um
+    allen Teilnehmern die Gelegenheit zu geben, aus diesem Seminar
+    nachhaltig etwas mitzunehmen, fertigte jeder Vortragende eine
+    allen zugängliche schriftliche Ausarbeitung an.  Die
+    Ausarbeitungen finden sich in leicht redigierter Fassung durch die
+    Editoren im vorliegenden technischen Bericht wieder.
+  </details>
 
 * Jürgen Reuter, Walter F. Tichy. _Logging Kernel Events on
   Clusters_. In _Proc. of the Terascale Performance Analysis Workshop
