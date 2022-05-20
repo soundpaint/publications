@@ -1,0 +1,297 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+%\usefonttheme{structuresmallcapsserif}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning}
+\usepackage[export]{adjustbox}
+%\usepackage{fontspec}
+\usepackage{yfonts}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\qmark}{\ding{51} / \ding{55}}%
+\newcommand{\xmark}{\ding{55}}%
+%\usepackage{Alegreya}
+%\usepackage{libertine}
+%\usepackage[scaled]{helvet}
+%\renewcommand*\oldstylenums[1]{{\AlegreyaOsF #1}}
+
+%\setbeamercolor{frametitle}{bg={}}
+%\beamertemplatenavigationsymbolsempty
+\title[RP2040 PIO Emulator]{
+  Raspberry Pi Pico RP2040 PIO Emulator}
+\subtitle{A Useful Development \& Debugging Aid}
+\author{Jürgen~Reuter}
+\institute[\tt{soundpaint.org}]{\tt{soundpaint.org}}
+\date[GPN2022]{GPN Karlsruhe, 2022/5/20}
+
+\AtBeginSection[] {
+  \begin{frame}
+    \frametitle{Overview}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\newcommand{\bs}{\textbackslash{}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\tikzstyle{every picture}+=[remember picture]
+\everymath{\displaystyle}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Overview}
+  \tableofcontents
+\end{frame}
+
+\section{Pico, RP2040, PIO}
+
+\begin{frame}
+  \frametitle{Pico}
+  \includegraphics[width=.3\textwidth,right]{../images/pico.png}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} microcontroller board}
+  \item<3-> {\color<3>{blue} far superior to prior Arduino boards (performance, memory)}
+  \item<4-> {\color<4>{blue} only moderately more power consumption}
+  \item<5-> {\color<5>{blue} expect success similar to previous RPi boards}
+  \item<6-> {\color<6>{blue} excellent software support}
+  \item<7-> {\color<7>{blue} based on RP2040 microcontroller chip}
+  \item<8-> {\color<8>{blue} price: board $\approx4$US\$, RP2040 chip
+    $\approx1$US\$}
+  \item<9-> {\color<9>{blue} further reading:
+    \url{https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{RP2040}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} microcontroller chip}
+  \item<3-> {\color<3>{blue} designed by Raspberry Pi foundation}
+  \item<4-> {\color<4>{blue} 2 ARM Cortex-M0+ cores}
+  \item<5-> {\color<5>{blue} 264 KB RAM}
+  \item<6-> {\color<6>{blue} DMA controller}
+  \item<7-> {\color<7>{blue} 30 GPIO pins}
+  \item<8-> {\color<8>{blue} 2 PIO units for programming GPIOs}
+  \item<9-> {\color<9>{blue} system frequency up to 133 MHz (w/o overclocking)}
+  \item<10-> {\color<10>{blue} further reading:
+    \url{https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PIO}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} \textbf{P}rogrammable \textbf{I}nput /
+    \textbf{O}utput}
+  \item<3-> {\color<3>{blue} 2 PIO units per RP2040}
+  \item<4-> {\color<4>{blue} 4 I/O processors per PIO unit}
+  \item<5-> {\color<5>{blue} 4 I/O processors share 32 words of program memory}
+  \item<6-> {\color<6>{blue} very compact op-codes for short programs}
+  \item<7-> {\color<7>{blue} further reading: Chap.~3 \emph{PIO} of
+    \url{https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PIO Processor Instruction Set (1)}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} data transfer instructions}
+  \item<3-> {\color<3>{blue} conditional jump / wait instruction}
+  \item<4-> {\color<4>{blue} no arithmetic ops}
+  \item<5-> {\color<5>{blue} no logic ops}
+  \item<6-> {\color<6>{blue} that's it (almost)}
+  \item<7-> {\color<7>{blue} exactly one instruction per cycle for exact timing}
+  \item<8-> {\color<8>{blue} single-word op-codes only, each 32 bits of size}
+  \item<9-> {\color<9>{blue} optional delay cycles following each instruction}
+  \item<10-> {\color<10>{blue} further reading:
+    \url{https://raspberrypi.github.io/pico-sdk-doxygen/weblinks\_page.html}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PIO Processor Instruction Set (2)}
+  \scriptsize
+  \begin{tabular}{|ll|}
+    \hline
+    \textbf{Mnemonic} & \textbf{Short Description}\\
+    \hline
+    \hline
+    JMP & Set program counter to specified address if\\
+        & specified condition is true. Otherwise, no operation.\\
+    \hline
+    WAIT & Stall until some condition is met.\\
+    \hline
+    IN & Shift specified number of bits from specified source\\
+       & into the Input Shift Register.\\
+    \hline
+    OUT & Shift specified amount of bits out of the Output Shift\\
+        & Register and write those bits to specified destination.\\
+    \hline
+    PUSH & Push the contents of the Input Shift Register into the RX FIFO\\
+         & as a single 32-bit word. Clear Input Shift Register to all-zeroes.\\
+    \hline
+    PULL & Load a 32-bit word from the TX FIFO into the Output Shift Register.\\
+    \hline
+    MOV & Copy data from the specified source to the specified destination.\\
+    \hline
+    IRQ & Set or clear the IRQ flag selected by the specified index argument.\\
+    \hline
+    SET & Write specified immediate value to specified destination.\\
+    \hline
+  \end{tabular}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{Example Program}
+  {
+  \scriptsize
+  \begin{lstlisting}
+.program squarewave
+        set pindirs, 1     ; Set pin to output
+again:
+        set pins, 1 [1]    ; Drive pin high, then delay for one cycle
+        set pins, 0        ; Drive pin low
+        jmp again          ; Set PC to label `again`
+  \end{lstlisting}
+  }
+  (Source: RP2040 datasheet)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Typical Applications of PIO Programs}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} simple signal generator}
+  \item<3-> {\color<3>{blue} simple toys like LED blinking}
+  \item<4-> {\color<4>{blue} SPI interface}
+  \item<5-> {\color<5>{blue} USB interface}
+  \item<6-> {\color<6>{blue} UART interface}
+  \item<7-> {\color<7>{blue} I2C interface}
+  \item<8-> {\color<8>{blue} VGA driver (somewhat challenging)}
+  \item<9-> {\color<9>{blue} maybe driver for LCD panels?}
+  \item<10-> {\color<10>{blue} custom Pico interconnect (e.g. token ring?)}
+  \item<11-> {\color<11>{blue} …}
+  \item<12-> {\color<12>{blue} further examples:
+    \url{https://github.com/raspberrypi/pico-examples}}
+  \end{itemize}
+\end{frame}
+
+\section{Developing PIO Programs \& RP2040 Emulator}
+
+\begin{frame}
+  \frametitle{Typical Development Cycle with RP2040 Hardware}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} 1: write program e.g. on PC / Notebook}
+  \item<3-> {\color<3>{blue} 2: upload program}
+  \item<4-> {\color<4>{blue} 3: test \& debug program}
+  \item<5-> {\color<5>{blue} 4: if ok, go to 7}
+  \item<6-> {\color<6>{blue} 5: otherwise, fix program}
+  \item<7-> {\color<7>{blue} 6: go to 2}
+  \item<8-> {\color<8>{blue} 7: done; can eat gulasch now}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Testing: Impossible to Debug While Running on RP2040}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} no single-step support}
+  \item<3-> {\color<3>{blue} no logging support}
+  \item<4-> {\color<4>{blue} no direct access to program counter}
+  \item<5-> {\color<5>{blue} no direct access to instruction delay status}
+  \item<6-> {\color<6>{blue} no direct access to FIFOs}
+  \item<7-> {\color<7>{blue} no direct access to PIO's GPIO state}
+  \item<8-> {\color<8>{blue} no direct access to various status bits}
+  \item<9-> {\color<9>{blue} need additional hardware for recording GPIOs}
+  \item<10-> {\color<10>{blue} …}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{So, what to do?}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} implement an emulator}
+  \item<3-> {\color<3>{blue} focus not on realtime, but on debugging}
+  \item<4-> {\color<4>{blue} access to full internal state in emulator}
+  \item<5-> {\color<5>{blue} found \& reported various bugs \& flaws in official RP2040 reference manual}
+  \item<6-> {\color<6>{blue} fun fact: my ordered Pico arrived \textit{after} implementation of emulator}
+  \item<7-> {\color<7>{blue} source code (license: GPL v2):
+    \url{https://github.com/soundpaint/rp2040pio}}
+  \item<8-> {\color<8>{blue} full documentation:
+    \url{https://rp2040pio-docs.readthedocs.io/en/latest/}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tool Set}
+  \begin{itemize}
+  \item<2-> {\color<2>{blue} monitor \& control program
+    \vspace{-1em}
+    \includegraphics[width=.15\textwidth,right]{../images/monitor-help.png}}
+  \item<3-> {\color<3>{blue} GPIO observer
+    \vspace{-1em}
+    \includegraphics[width=.15\textwidth,right]{../images/gpio-observer.png}}
+  \item<4-> {\color<4>{blue} code observer
+    \vspace{-1em}
+    \includegraphics[width=.15\textwidth,right]{../images/code-observer.png}}
+  \item<5-> {\color<5>{blue} FIFO observer
+    \vspace{-1em}
+    \includegraphics[width=.15\textwidth,right]{../images/fifo-observer.png}}
+  \item<6-> {\color<6>{blue} diagram creator
+    \vspace{-1em}
+    \includegraphics[width=.15\textwidth,right]{../images/diagram.png}}
+  \item<7-> {\color<7>{blue} … (maybe more to come)}
+  \end{itemize}
+%  \vspace{-10em}
+%  \includegraphics<2>[width=.4\textwidth,right]{../images/monitor-help.png}
+%  \includegraphics<3>[width=.4\textwidth,right]{../images/gpio-observer.png}
+%  \includegraphics<4>[width=.4\textwidth,right]{../images/code-observer.png}
+%  \includegraphics<5>[width=.4\textwidth,right]{../images/fifo-observer.png}
+%  \includegraphics<6>[width=.4\textwidth,right]{../images/diagram.png}
+\end{frame}
+
+\section{Demo}
+
+\begin{frame}
+  \frametitle{Live Demo}
+\end{frame}
+
+\section{Q \& A}
+
+\begin{frame}
+  \frametitle{Questions}
+  \begin{centering}
+    Questions?
+  \end{centering}
+\end{frame}
+
+\begin{frame}
+  \nocite{PicoDocs_2021}
+  \nocite{RP2040Datasheet_2021}
+  \nocite{PicoCSDK_2021}
+  \nocite{PicoDatasheet_2021}
+  \nocite{PicoSDK_2021}
+  \nocite{PicoExamples_2021}
+  \nocite{RP2040PIO_2021}
+  \nocite{RP2040PIOFullDocs_2021}
+  \frametitle{References}
+  \bibliographystyle{acl}
+  \fontsize{2.5}{4}
+  \bibliography{gpn2022}
+\end{frame}
+
+\end{document}
+
+% TODOs:
+% Make picture of RPi Pico.
+
+%  Local Variables:
+%    coding:utf-8
+%    mode:LaTeX
+%  End:
