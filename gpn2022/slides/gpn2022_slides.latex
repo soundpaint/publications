@@ -109,7 +109,7 @@
   \item<5-> {\color<5>{blue} no logic ops}
   \item<6-> {\color<6>{blue} that's it (almost)}
   \item<7-> {\color<7>{blue} exactly one instruction per cycle for exact timing}
-  \item<8-> {\color<8>{blue} single-word op-codes only, each 32 bits of size}
+  \item<8-> {\color<8>{blue} single-word op-codes only, each 16 bits of size}
   \item<9-> {\color<9>{blue} optional delay cycles following each instruction}
   \item<10-> {\color<10>{blue} further reading:
     \url{https://raspberrypi.github.io/pico-sdk-doxygen/weblinks\_page.html}}
